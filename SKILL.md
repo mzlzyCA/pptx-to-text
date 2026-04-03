@@ -1,7 +1,7 @@
 ---
 slug: pptx-to-text
 name: PPTX To Text
-version: 0.2.0
+version: 0.2.1
 description: >
   Extract text content from PowerPoint PPTX files and convert presentations to plain text. PPTX to text extraction, PowerPoint text extractor, presentation content extraction, slide text mining, PPTX parser, PPT to TXT converter, PowerPoint to plain text, presentation scraper, slide content reader, deck text extraction, PPTX content dump, presentation text export.
 
