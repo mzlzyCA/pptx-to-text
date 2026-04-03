@@ -1,28 +1,61 @@
 ---
-slug: pptx-to-text
-name: PPTX To Text
-version: 0.2.2
-description: >
-  Extract text content from PowerPoint PPTX files and convert presentations to plain text. PPTX to text extraction, PowerPoint text extractor, presentation content extraction, slide text mining, PPTX parser, PPT to TXT converter, PowerPoint to plain text, presentation scraper, slide content reader, deck text extraction, PPTX content dump, presentation text export.
-
-  Use when asked to 'extract text from PowerPoint', 'get text from slides', 'convert PPTX to text', 'read presentation content', 'pull text from a deck'. Solves the problem of needing readable text from binary PPTX files — no more manually copying slide by slide. Handles speaker notes, slide titles, body text, and table content from presentations.
-
-  PPTX转文本, 演示文稿文字提取, PPT文字提取, 幻灯片文本导出, PowerPoint内容提取, 演示文稿转纯文本.
-
-  Powered by MinerU document parsing engine for accurate text extraction from complex slide layouts, SmartArt, and embedded content. Ideal for researchers, analysts, content creators, and anyone who needs to repurpose presentation content. Works with .pptx files from Microsoft PowerPoint, Google Slides exports, LibreOffice Impress, and Keynote exports.
-tags:
-  - pptx
-  - powerpoint
-  - text-extraction
-  - presentation
-  - slides
-  - ppt
-  - document-parsing
-  - ocr
-  - mineru
-  - converter
-  - office
-  - content-extraction
+name: pptx-to-text
+description: "PPTX to Text - extract readable text from PowerPoint (.pptx) presentations using MinerU. Output is Markdown (the closest plain-text format MinerU supports)."
+homepage: https://mineru.net
+metadata: {"openclaw": {"emoji": "📄", "requires": {"bins": ["mineru-open-api"], "env": ["MINERU_TOKEN"]}, "primaryEnv": "MINERU_TOKEN", "install": [{"id": "npm", "kind": "node", "package": "mineru-open-api", "bins": ["mineru-open-api"], "label": "Install via npm"}, {"id": "go", "kind": "go", "package": "github.com/opendatalab/MinerU-Ecosystem/cli/mineru-open-api", "bins": ["mineru-open-api"], "label": "Install via go install", "os": ["darwin", "linux"]}]}}
 ---
 
-Use the mineru tool to extract text from the provided PPTX file. Return the extracted text content organized by slide order, including slide titles, body text, speaker notes, and table content. Preserve the logical reading order of each slide.
+# PPTX to Text
+
+Extract readable text from PowerPoint (.pptx) presentations using MinerU. MinerU outputs Markdown as the closest format to plain text.
+
+## Install
+
+```bash
+npm install -g mineru-open-api
+# or via Go (macOS/Linux):
+go install github.com/opendatalab/MinerU-Ecosystem/cli/mineru-open-api@latest
+```
+
+## Quick Start
+
+```bash
+# Extract text from .pptx to stdout (no token required)
+mineru-open-api flash-extract slides.pptx
+
+# Save to file
+mineru-open-api flash-extract slides.pptx -o ./out/
+
+# Extract specific slides
+mineru-open-api flash-extract slides.pptx --pages 1-5
+
+# JSON output contains text fields per slide (requires token)
+mineru-open-api extract slides.pptx -f json -o ./out/
+```
+
+## Authentication
+
+No token needed for `flash-extract`. Token required for `extract`:
+
+```bash
+mineru-open-api auth             # Interactive token setup
+export MINERU_TOKEN="your-token" # Or via environment variable
+```
+
+Create token at: https://mineru.net/apiManage/token
+
+## Capabilities
+
+- Supported input: .pptx (local file or URL)
+- `flash-extract`: no token, Markdown output to stdout (max 10 MB / 20 pages)
+- For truly plain text: use `extract -f json` and read text fields from JSON output
+- Language hint with `--language` (default: `ch`, use `en` for English)
+- Slide range with `--pages` (e.g. `1-5`)
+
+## Notes
+
+- MinerU has no `-f text` format; Markdown output is the closest to plain text
+- For `.ppt` (legacy format), use `ppt-extract` instead
+- Output goes to stdout by default; use `-o <dir>` to save to a file or directory
+- All progress/status messages go to stderr; document content goes to stdout
+- MinerU is open-source by OpenDataLab (Shanghai AI Lab): https://github.com/opendatalab/MinerU
